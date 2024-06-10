@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:3.1.7-3.1.4-ubuntu20.04
+    container_name: dcgm-exporter
+    environment:
+      - DCGM_EXPORTER_INTERVAL=3
+    ports:
+      - "9400:9400"
+    volumes:
+      - /proc:/proc
+      - ./default-counters.csv:/etc/dcgm-exporter/default-counters.csv
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    runtime: nvidia
+    pid: host
+    privileged: true
+    restart: unless-stopped
