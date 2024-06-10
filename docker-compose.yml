@@ -11,12 +11,5 @@ services:
     volumes:
       - /proc:/proc
       - ./default-counters.csv:/etc/dcgm-exporter/default-counters.csv
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-    runtime: nvidia
-    pid: host
     privileged: true
     restart: unless-stopped
